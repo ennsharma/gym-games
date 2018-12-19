@@ -18,6 +18,10 @@ class BlackjackEnv(gym.Env):
     self.card_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
     self.reset()
 
+    self.action_space = spaces.Discrete(len(self.action_map))
+    self.observation_space = spaces.Discrete(len(self.card_values))
+    self.seed()
+
   def step(self, action):
     action_func = self.action_map[action]
     obs, rew, done = action_func()
@@ -30,6 +34,10 @@ class BlackjackEnv(gym.Env):
 
   def render(self, mode='human', close=False):
     pass
+
+  def seed(self, seed=None):
+    _, seed = seeding.np_random(seed)
+    return [seed]
 
   def _hit():
   	self.total += self.card_values[np.random.randint(0, 13)]
